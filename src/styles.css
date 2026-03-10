@@ -94,12 +94,34 @@ body {
 
 /* Links */
 a {
-  color: #4f46e5;
+  color: #818cf8;
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
+}
+
+/* Dark Mode Styles */
+.app-container.dark ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+.app-container.dark ::-webkit-scrollbar-thumb {
+  background: #4b5563;
+}
+
+.app-container.dark ::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+.app-container.dark ::selection {
+  background: #3730a3;
+  color: #e0e7ff;
+}
+
+.app-container.dark a {
+  color: #818cf8;
 }
 
 /* Utility Classes */
