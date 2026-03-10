@@ -22,9 +22,10 @@ import { NewsEntry } from '../models/news-entry';
       </header>
       
       <h2 class="entry-title">
-        <a [href]="entry.url" target="_blank" rel="noopener">
+        <a *ngIf="isValidUrl(entry.url)" [href]="entry.url" target="_blank" rel="noopener">
           {{ entry.title }}
         </a>
+        <span *ngIf="!isValidUrl(entry.url)">{{ entry.title }}</span>
       </h2>
       
       <p class="entry-summary">{{ entry.summary }}</p>
@@ -39,6 +40,7 @@ import { NewsEntry } from '../models/news-entry';
           </span>
         </div>
         <a 
+          *ngIf="isValidUrl(entry.url)"
           [href]="entry.url" 
           target="_blank" 
           rel="noopener"
@@ -54,6 +56,16 @@ export class EntryCardComponent {
   @Input({ required: true }) entry!: NewsEntry;
   @Output() delete = new EventEmitter<string>();
   @Output() tagClick = new EventEmitter<string>();
+
+  isValidUrl(url: string | undefined | null): boolean {
+    if (!url || typeof url !== 'string') return false;
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+    } catch {
+      return false;
+    }
+  }
 
   formatDate(timestamp: string): string {
     const date = new Date(timestamp);
