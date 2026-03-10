@@ -1,0 +1,31 @@
+{
+  "entries": [
+    {
+      "id": "1",
+      "timestamp": "2026-03-10T04:00:00Z",
+      "source": "TechCrunch",
+      "title": "AI Breakthrough Announced",
+      "summary": "A major advancement in AI efficiency has been announced by researchers at a leading tech company. The new model demonstrates 40% faster training times while maintaining accuracy benchmarks. This development could significantly reduce computational costs for AI applications across the industry.",
+      "url": "https://techcrunch.com/2026/03/10/ai-breakthrough-announced",
+      "tags": ["AI", "Technology"]
+    },
+    {
+      "id": "2",
+      "timestamp": "2026-03-09T15:30:00Z",
+      "source": "BBC News",
+      "title": "Global Climate Summit Reaches Agreement",
+      "summary": "World leaders have reached a historic agreement at the global climate summit, committing to accelerate carbon emission reductions by 2030. The deal includes binding targets for developed nations and financial support mechanisms for developing countries transitioning to renewable energy.",
+      "url": "https://bbc.com/news/2026-03-09-climate-agreement",
+      "tags": ["Environment", "Politics", "World News"]
+    },
+    {
+      "id": "3",
+      "timestamp": "2026-03-09T08:15:00Z",
+      "source": "Reuters",
+      "title": "New Federal Tech Regulations Proposed",
+      "summary": "Lawmakers have introduced comprehensive legislation aimed at increasing transparency and accountability in the technology sector. The proposed regulations would require large tech companies to disclose algorithms used in content recommendation systems and strengthen data privacy protections for consumers.",
+      "url": "https://reuters.com/technology/2026-03-09-tech-regulations",
+      "tags": ["Politics", "Technology", "Regulation"]
+    }
+  ]
+}
