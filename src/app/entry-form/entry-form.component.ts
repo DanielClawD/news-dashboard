@@ -105,12 +105,24 @@ export class EntryFormComponent {
   }
 
   isValid(): boolean {
-    return !!(
+    if (!(
       this.formData.source?.trim() &&
       this.formData.title?.trim() &&
       this.formData.summary?.trim() &&
       this.formData.url?.trim()
-    );
+    )) {
+      return false;
+    }
+    return this.isValidUrl(this.formData.url);
+  }
+
+  isValidUrl(url: string): boolean {
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+    } catch {
+      return false;
+    }
   }
 
   onSubmit(): void {
