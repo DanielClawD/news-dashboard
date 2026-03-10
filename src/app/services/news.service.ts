@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { NewsEntry, NewsData } from '../models/news-entry';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
-  private readonly STORAGE_KEY = 'news_data';
-  private readonly DATA_URL = 'news-data.json';
+  private readonly API_URL = 'http://localhost:3001/api/entries';
   
   private entriesSubject = new BehaviorSubject<NewsEntry[]>([]);
   public entries$ = this.entriesSubject.asObservable();
@@ -19,25 +17,15 @@ export class NewsService {
   }
 
   private loadEntries(): void {
-    // First try to load from localStorage for persistence
-    const saved = localStorage.getItem(this.STORAGE_KEY);
-    if (saved) {
-      const data: NewsData = JSON.parse(saved);
-      this.entriesSubject.next(data.entries || []);
-    } else {
-      // Load initial data from JSON file
-      this.http.get<NewsData>(this.DATA_URL).pipe(
-        catchError(() => of({ entries: [] }))
-      ).subscribe(data => {
+    this.http.get<NewsData>(this.API_URL).subscribe({
+      next: (data) => {
         this.entriesSubject.next(data.entries || []);
-        this.saveToStorage();
-      });
-    }
-  }
-
-  private saveToStorage(): void {
-    const data: NewsData = { entries: this.entriesSubject.value };
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+      },
+      error: (err) => {
+        console.error('Failed to load entries:', err);
+        this.entriesSubject.next([]);
+      }
+    });
   }
 
   getEntries(): NewsEntry[] {
@@ -45,24 +33,22 @@ export class NewsService {
   }
 
   addEntry(entry: Omit<NewsEntry, 'id' | 'timestamp'>): void {
-    const newEntry: NewsEntry = {
-      ...entry,
-      id: this.generateId(),
-      timestamp: new Date().toISOString()
-    };
-    
-    const current = this.entriesSubject.value;
-    this.entriesSubject.next([newEntry, ...current]);
-    this.saveToStorage();
+    this.http.post<NewsEntry>(this.API_URL, entry).subscribe({
+      next: (newEntry) => {
+        const current = this.entriesSubject.value;
+        this.entriesSubject.next([newEntry, ...current]);
+      },
+      error: (err) => console.error('Failed to add entry:', err)
+    });
   }
 
   deleteEntry(id: string): void {
-    const current = this.entriesSubject.value.filter(e => e.id !== id);
-    this.entriesSubject.next(current);
-    this.saveToStorage();
-  }
-
-  private generateId(): string {
-    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    this.http.delete(`${this.API_URL}/${id}`).subscribe({
+      next: () => {
+        const current = this.entriesSubject.value.filter(e => e.id !== id);
+        this.entriesSubject.next(current);
+      },
+      error: (err) => console.error('Failed to delete entry:', err)
+    });
   }
 }
