@@ -98,6 +98,53 @@
   border-color: #9ca3af;
 }
 
+.tag-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  min-width: 200px;
+}
+
+.active-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background: #e0e7ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #4338ca;
+}
+
+.tag-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 9999px;
+  font-size: 1rem;
+  line-height: 1;
+  color: #4338ca;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.tag-remove:hover {
+  background: #c7d2fe;
+}
+
 @media (max-width: 768px) {
   .filter-bar {
     flex-direction: column;

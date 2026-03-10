@@ -7,7 +7,7 @@ import { NewsEntry, NewsData } from '../models/news-entry';
   providedIn: 'root'
 })
 export class NewsService {
-  private readonly API_URL = 'http://localhost:3001/api/entries';
+  private readonly API_URL = 'http://localhost:3000/api/entries';
   
   private entriesSubject = new BehaviorSubject<NewsEntry[]>([]);
   public entries$ = this.entriesSubject.asObservable();

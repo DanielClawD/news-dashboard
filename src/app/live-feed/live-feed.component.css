@@ -36,6 +36,58 @@ app-filter-bar {
   margin-bottom: 1.5rem;
 }
 
+.active-tags-display {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #f5f3ff;
+  border: 1px solid #ede9fe;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.active-tags-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.active-tags-display .tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background: #e0e7ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #4338ca;
+}
+
+.active-tags-display .tag-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 9999px;
+  font-size: 1rem;
+  line-height: 1;
+  color: #4338ca;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.active-tags-display .tag-remove:hover {
+  background: #c7d2fe;
+}
+
 .entries-container {
   display: flex;
   flex-direction: column;

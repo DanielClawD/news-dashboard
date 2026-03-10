@@ -1,6 +1,6 @@
 export interface FilterState {
   source: string;
-  tag: string;
+  tags: string[];
   dateFrom: string;
   dateTo: string;
   search: string;

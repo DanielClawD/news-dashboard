@@ -24,10 +24,20 @@ import { FilterBarComponent } from '../filter-bar/filter-bar.component';
       </app-entry-form>
       
       <app-filter-bar 
+        [activeTags]="currentFilters.tags"
         (filtersChange)="onFiltersChange($event)">
       </app-filter-bar>
       
       <div class="entries-container">
+        <!-- Active Tags Display -->
+        <div class="active-tags-display" *ngIf="currentFilters.tags.length > 0">
+          <span class="active-tags-label">Filtering by tags:</span>
+          <span *ngFor="let tag of currentFilters.tags" class="tag-chip">
+            {{ tag }}
+            <button class="tag-remove" (click)="removeTag(tag)" title="Remove tag">×</button>
+          </span>
+        </div>
+        
         <div class="entries-header">
           <span class="entries-count">
             {{ filteredEntries.length }} 
@@ -68,7 +78,7 @@ export class LiveFeedComponent implements OnInit, OnDestroy {
   filteredEntries: NewsEntry[] = [];
   currentFilters: FilterState = {
     source: '',
-    tag: '',
+    tags: [],
     dateFrom: '',
     dateTo: '',
     search: ''
@@ -103,18 +113,29 @@ export class LiveFeedComponent implements OnInit, OnDestroy {
   }
 
   onTagClick(tag: string): void {
-    this.currentFilters.tag = tag;
+    if (!this.currentFilters.tags.includes(tag)) {
+      this.currentFilters.tags = [...this.currentFilters.tags, tag];
+      this.applyFilters();
+    }
+  }
+
+  removeTag(tag: string): void {
+    this.currentFilters.tags = this.currentFilters.tags.filter(t => t !== tag);
     this.applyFilters();
   }
 
   hasActiveFilters(): boolean {
-    return Object.values(this.currentFilters).some(v => v !== '');
+    return this.currentFilters.source !== '' || 
+           this.currentFilters.tags.length > 0 || 
+           this.currentFilters.dateFrom !== '' || 
+           this.currentFilters.dateTo !== '' || 
+           this.currentFilters.search !== '';
   }
 
   clearFilters(): void {
     this.currentFilters = {
       source: '',
-      tag: '',
+      tags: [],
       dateFrom: '',
       dateTo: '',
       search: ''
@@ -143,11 +164,12 @@ export class LiveFeedComponent implements OnInit, OnDestroy {
       result = result.filter(e => e.source.toLowerCase().includes(search));
     }
 
-    // Tag filter
-    if (f.tag?.trim()) {
-      const search = f.tag.toLowerCase();
+    // Tag filter (multiple tags - match any)
+    if (f.tags.length > 0) {
       result = result.filter(e => 
-        e.tags.some(tag => tag.toLowerCase().includes(search))
+        f.tags.some(tag => 
+          e.tags.some(entryTag => entryTag.toLowerCase().includes(tag.toLowerCase()))
+        )
       );
     }
 

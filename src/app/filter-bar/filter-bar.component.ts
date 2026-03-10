@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FilterState } from '../models/filter-state';
@@ -24,9 +24,10 @@ import { FilterState } from '../models/filter-state';
         <input
           id="tag-filter"
           type="text"
-          [(ngModel)]="filters.tag"
-          (ngModelChange)="onFilterChange()"
-          placeholder="Filter by tag...">
+          [(ngModel)]="tagInput"
+          (keydown.enter)="addTag()"
+          (ngModelChange)="onTagInputChange($event)"
+          placeholder="Type tag and press Enter...">
       </div>
       
       <div class="filter-section date-range">
@@ -70,31 +71,59 @@ import { FilterState } from '../models/filter-state';
 })
 export class FilterBarComponent {
   @Output() filtersChange = new EventEmitter<FilterState>();
+  @Input() set activeTags(tags: string[]) {
+    this.filters.tags = tags;
+  }
 
   filters: FilterState = {
     source: '',
-    tag: '',
+    tags: [],
     dateFrom: '',
     dateTo: '',
     search: ''
   };
+  
+  tagInput = '';
 
   onFilterChange(): void {
     this.filtersChange.emit({ ...this.filters });
   }
 
+  addTag(): void {
+    const tag = this.tagInput.trim();
+    if (tag && !this.filters.tags.includes(tag)) {
+      this.filters.tags = [...this.filters.tags, tag];
+      this.tagInput = '';
+      this.onFilterChange();
+    }
+  }
+
+  removeTag(tag: string): void {
+    this.filters.tags = this.filters.tags.filter(t => t !== tag);
+    this.onFilterChange();
+  }
+
+  onTagInputChange(value: string): void {
+    this.tagInput = value;
+  }
+
   hasActiveFilters(): boolean {
-    return Object.values(this.filters).some(v => v !== '');
+    return this.filters.source !== '' || 
+           this.filters.tags.length > 0 || 
+           this.filters.dateFrom !== '' || 
+           this.filters.dateTo !== '' || 
+           this.filters.search !== '';
   }
 
   clearFilters(): void {
     this.filters = {
       source: '',
-      tag: '',
+      tags: [],
       dateFrom: '',
       dateTo: '',
       search: ''
     };
+    this.tagInput = '';
     this.onFilterChange();
   }
 }
