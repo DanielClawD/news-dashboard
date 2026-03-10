@@ -1,9 +1,9 @@
 .entry-card {
-  background: #1f2937;
+  background: white;
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  border: 1px solid #374151;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
   transition: box-shadow 0.2s ease;
 }
 
@@ -140,4 +140,66 @@
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+/* Dark mode */
+:host-context(.dark) .entry-card {
+  background: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+:host-context(.dark) .entry-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+:host-context(.dark) .entry-source {
+  color: #818cf8;
+}
+
+:host-context(.dark) .entry-time {
+  color: #9ca3af;
+}
+
+:host-context(.dark) .delete-btn {
+  color: #6b7280;
+}
+
+:host-context(.dark) .delete-btn:hover {
+  color: #f87171;
+  background: #450a0a;
+}
+
+:host-context(.dark) .entry-title {
+  color: #f9fafb;
+}
+
+:host-context(.dark) .entry-title a {
+  color: #f9fafb;
+}
+
+:host-context(.dark) .entry-title a:hover {
+  color: #818cf8;
+}
+
+:host-context(.dark) .entry-summary {
+  color: #d1d5db;
+}
+
+:host-context(.dark) .tag {
+  color: #818cf8;
+  background: #312e81;
+}
+
+:host-context(.dark) .tag:hover {
+  background: #818cf8;
+  color: #1f2937;
+}
+
+:host-context(.dark) .read-more {
+  color: #818cf8;
+}
+
+:host-context(.dark) .read-more:hover {
+  color: #a5b4fc;
 }
