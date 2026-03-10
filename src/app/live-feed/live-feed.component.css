@@ -22,7 +22,7 @@
 
 .feed-subtitle {
   font-size: 1rem;
-  color: #6b7280;
+  color: #9ca3af;
   margin: 0;
 }
 
@@ -52,7 +52,7 @@ app-filter-bar {
 .entries-count {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #6b7280;
+  color: #9ca3af;
 }
 
 .last-updated {
@@ -69,9 +69,9 @@ app-filter-bar {
 .empty-state {
   text-align: center;
   padding: 3rem 1.5rem;
-  background: white;
+  background: #1f2937;
   border-radius: 12px;
-  border: 2px dashed #e5e7eb;
+  border: 2px dashed #374151;
 }
 
 .empty-icon {
@@ -82,20 +82,20 @@ app-filter-bar {
 .empty-state h3 {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #374151;
+  color: #e5e7eb;
   margin: 0 0 0.5rem 0;
 }
 
 .empty-state p {
   font-size: 0.9375rem;
-  color: #6b7280;
+  color: #9ca3af;
   margin: 0;
 }
 
 .link-btn {
   background: none;
   border: none;
-  color: #4f46e5;
+  color: #818cf8;
   font-size: inherit;
   font-family: inherit;
   cursor: pointer;
@@ -104,7 +104,7 @@ app-filter-bar {
 }
 
 .link-btn:hover {
-  color: #4338ca;
+  color: #6366f1;
 }
 
 @media (max-width: 640px) {
